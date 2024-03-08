@@ -18,12 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Project)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SpecialisationType)
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -36,12 +36,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
-            <td>
+          @*   <td>
                 @Html.DisplayFor(modelItem => item.Project.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SpecialisationType)
-            </td>
+            </td> *@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.WorkerId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.WorkerId">Details</a> |

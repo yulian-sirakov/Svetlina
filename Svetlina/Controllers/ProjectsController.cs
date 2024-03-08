@@ -74,7 +74,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var project = await projectContext.ReadAsync((int)id, false, true);
+            var project = await projectContext.ReadAsync((int)id, true, true);
             if (project == null)
             {
                 return NotFound();

@@ -10,11 +10,12 @@ namespace Svetlina.Data.Models
         public List<Project> Projects { get; set; }
 
 
-        private Customer()
+        public Customer()
         {
             Reports = new List<Report>();
             Projects = new List<Project>();
         }
+        
         public Customer(string CustomerName, string Email, string PhoneNumber)
         {
             UserName = CustomerName;

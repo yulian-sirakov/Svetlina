@@ -108,6 +108,7 @@ namespace Svetlina.Services
                 productFromDb.ProductName = item.ProductName;
                 productFromDb.ProductId = item.ProductId;
                 productFromDb.Price = item.Price;
+                productFromDb.ProductImage= item.ProductImage;
 
 
                 if (useNavigationalProperties)

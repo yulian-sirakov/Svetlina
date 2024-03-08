@@ -18,20 +18,20 @@ namespace Svetlina.Services
         {
             try
             {
-                List<Project> projectsFromDb = new List<Project>();
-                foreach (Project project in item.Projects)
-                {
-                    Project projectfromDb = await dbContext.Projects.FindAsync(project.ProjectId);
-                    if (projectfromDb == null)
-                    {
-                        projectsFromDb.Add(project);
-                    }
-                    else
-                    {
-                        projectsFromDb.Add(projectfromDb);
-                    }
-                }
-                item.Projects = projectsFromDb;
+                //List<Project> projectsFromDb = new List<Project>();
+                //foreach (Project project in item.Projects)
+                //{
+                //    Project projectfromDb = await dbContext.Projects.FindAsync(project.ProjectId);
+                //    if (projectfromDb == null)
+                //    {
+                //        projectsFromDb.Add(project);
+                //    }
+                //    else
+                //    {
+                //        projectsFromDb.Add(projectfromDb);
+                //    }
+                //}
+               // item.Projects = projectsFromDb;
 
                 dbContext.Schedules.Add(item);
                 await dbContext.SaveChangesAsync();
@@ -67,10 +67,10 @@ namespace Svetlina.Services
             {
                 IQueryable<Schedule> query = dbContext.Schedules;
 
-                if (useNavigationalProperties)
-                {
-                    query = query.Include(b => b.Projects);
-                }
+                //if (useNavigationalProperties)
+                //{
+                //    query = query.Include(b => b.Projects);
+                //}
 
                 return await query.ToListAsync();
             }
@@ -85,14 +85,14 @@ namespace Svetlina.Services
         {
             try
             {
-                if (useNavigationalProperties)
-                {
-                    return dbContext.Schedules.Include(b => b.Projects).FirstOrDefault(b => b.ScheduleId == key);
-                }
-                else
-                {
+                //if (useNavigationalProperties)
+                //{
+                //    return dbContext.Schedules.Include(b => b.Projects).FirstOrDefault(b => b.ScheduleId == key);
+                //}
+                //else
+              
                     return await dbContext.Schedules.FindAsync(key);
-                }
+                
             }
             catch (Exception)
             {
@@ -113,19 +113,19 @@ namespace Svetlina.Services
                 if (useNavigationalProperties)
                 {
 
-                    if (item.Projects != null)
-                    {
-                        var projectsFromDb = dbContext.Projects;
-                        for (int i = 0; i < item.Projects.Count; i++)
-                        {
-                            var projectDb = projectsFromDb.FirstOrDefault(x => x.ProjectId == item.Projects[i].ProjectId);
-                            if (projectDb != null)
-                            {
-                                item.Projects[i] = projectDb;
-                            }
-                        }
-                    }
-                    scheduleFromDb.Projects = item.Projects;
+                    //if (item.Projects != null)
+                    //{
+                    //    var projectsFromDb = dbContext.Projects;
+                    //    for (int i = 0; i < item.Projects.Count; i++)
+                    //    {
+                    //        var projectDb = projectsFromDb.FirstOrDefault(x => x.ProjectId == item.Projects[i].ProjectId);
+                    //        if (projectDb != null)
+                    //        {
+                    //            item.Projects[i] = projectDb;
+                    //        }
+                    //    }
+                    //}
+                    //scheduleFromDb.Projects = item.Projects;
                 }
                 await dbContext.SaveChangesAsync();
 

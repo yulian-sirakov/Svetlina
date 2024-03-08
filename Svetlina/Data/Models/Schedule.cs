@@ -15,13 +15,14 @@ namespace Svetlina.Data.Models
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-        public List<Project> Projects { get; set; }
+        
 
         // Други полета, специфични за графика
+        public List<ScheduleWorkDay> WorkDays { get; set; } 
 
         public Schedule()
         {
-            Projects = new List<Project>();
+            WorkDays= new List<ScheduleWorkDay>();
         }
 
         public Schedule(string scheduleName, DateTime startDate, DateTime endDate)
@@ -29,7 +30,8 @@ namespace Svetlina.Data.Models
             ScheduleName = scheduleName;
             StartDate = startDate;
             EndDate = endDate;
-            Projects = new List<Project>();
+            WorkDays = new List<ScheduleWorkDay>();
+            
 
         }
     }

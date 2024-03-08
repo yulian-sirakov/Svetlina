@@ -14,13 +14,15 @@ namespace Svetlina.Controllers
     public class WorkersController : Controller
     {
         private readonly WorkerContext workerContext;
+        private readonly ProjectContext projectContext;
 
-        public WorkersController(WorkerContext workerContext)
+        public WorkersController(WorkerContext workerContext,ProjectContext projectContext)
         {
            this.workerContext = workerContext;  
+            this.projectContext = projectContext;
         }
 
-        // GET: Workers
+        //GET: Workers
         public async Task<IActionResult> Index()
         {
 
@@ -29,7 +31,8 @@ namespace Svetlina.Controllers
 
         // GET: Workers/Details/5
         public async Task<IActionResult> Details(int? id)
-        {
+        {   
+
             if (id == null)
             {
                 return NotFound();
@@ -41,13 +44,15 @@ namespace Svetlina.Controllers
             {
                 return NotFound();
             }
-
+            await LoadNav();
             return View(worker);
         }
 
         // GET: Workers/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            await LoadNav();
+
             return View();
         }
 
@@ -80,6 +85,8 @@ namespace Svetlina.Controllers
             {
                 return NotFound();
             }
+            await LoadNav();
+
             return View(worker);
         }
 
@@ -147,6 +154,12 @@ namespace Svetlina.Controllers
         private async Task<bool> WorkerExists(int id)
         {
             return await workerContext.ReadAsync(id) != null; 
+        }
+
+        private async Task LoadNav()
+        {
+            ViewData["Projects"] = new SelectList(await projectContext.ReadAllAsync(), "ProjectId", "ProjectName");
+            ViewData["SpecType"] = new SelectList(Enum.GetValues(typeof(SpecialisationType)).Cast<SpecialisationType>().ToList());
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Svetlina.Data.Common;
 
@@ -11,9 +12,11 @@ using Svetlina.Data.Common;
 namespace Svetlina.Data.Migrations
 {
     [DbContext(typeof(SvetlinaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240301062959_FinalMig")]
+    partial class FinalMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,12 +225,8 @@ namespace Svetlina.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ProductImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
@@ -334,32 +333,6 @@ namespace Svetlina.Data.Migrations
                     b.ToTable("Schedules");
                 });
 
-            modelBuilder.Entity("Svetlina.Data.Models.ScheduleWorkDay", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Day")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("ScheduleWorkDay");
-                });
-
             modelBuilder.Entity("Svetlina.Data.Models.Worker", b =>
                 {
                     b.Property<int>("WorkerId")
@@ -418,7 +391,7 @@ namespace Svetlina.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Svetlina.Data.Models.Schedule", "Schedule")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -439,21 +412,6 @@ namespace Svetlina.Data.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Svetlina.Data.Models.ScheduleWorkDay", b =>
-                {
-                    b.HasOne("Svetlina.Data.Models.Project", "project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Svetlina.Data.Models.Schedule", null)
-                        .WithMany("WorkDays")
-                        .HasForeignKey("ScheduleId");
-
-                    b.Navigation("project");
-                });
-
             modelBuilder.Entity("Svetlina.Data.Models.Worker", b =>
                 {
                     b.HasOne("Svetlina.Data.Models.Project", null)
@@ -468,7 +426,7 @@ namespace Svetlina.Data.Migrations
 
             modelBuilder.Entity("Svetlina.Data.Models.Schedule", b =>
                 {
-                    b.Navigation("WorkDays");
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Svetlina.Data.Models.Customer", b =>

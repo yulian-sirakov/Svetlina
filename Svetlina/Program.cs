@@ -19,7 +19,6 @@ builder.Services.AddScoped<ProjectContext, ProjectContext>();
 builder.Services.AddScoped<ReportContext, ReportContext>();
 builder.Services.AddScoped<ScheduleContext, ScheduleContext>();
 builder.Services.AddScoped<WorkerContext, WorkerContext>();
-builder.Services.AddScoped<CustomerContext, CustomerContext>();
 
 
 var app = builder.Build();

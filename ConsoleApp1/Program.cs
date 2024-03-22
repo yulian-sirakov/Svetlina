@@ -31,7 +31,7 @@ namespace SeedingDB
                     "Server=YULIYAN\\SQLEXPRESS;Database=SvetlinaDbv2;Trusted_Connection=True;TrustServerCertificate=True"
                     );
 
-                SvetlinaDbContext dbContext= new SvetlinaDbContext(builder.Options);
+                SvetlinaDbContext dbContext = new SvetlinaDbContext(builder.Options);
                 UserManager<Customer> userManager = new UserManager<Customer>(
                     new UserStore<Customer>(dbContext), Options.Create(options),
                     new PasswordHasher<Customer>(), new List<IUserValidator<Customer>>() { new UserValidator<Customer>() },
@@ -39,14 +39,14 @@ namespace SeedingDB
                     new IdentityErrorDescriber(), new ServiceCollection().BuildServiceProvider(),
                     new Logger<UserManager<Customer>>(new LoggerFactory())
                     );
-                
+
                 CustomerContext identityContext = new CustomerContext(dbContext, userManager);
 
                 dbContext.Roles.Add(new IdentityRole("Administrator") { NormalizedName = "ADMINISTRATOR" });
                 dbContext.Roles.Add(new IdentityRole("User") { NormalizedName = "USER" });
                 await dbContext.SaveChangesAsync();
 
-                Tuple<IdentityResult, Customer> result = await identityContext.CreateAsync("admin", "admin", "admin@abv.bg", "0876897654", Role.Administrator);
+                Tuple<IdentityResult, Customer> result = await identityContext.CreateUserAsync("Admin123", "Admin123_", "admin@abv.bg", "0876897654", Role.Administrator);
 
                 Console.WriteLine("Roles added successfully!");
 

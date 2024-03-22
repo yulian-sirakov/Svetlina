@@ -72,7 +72,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var product = await productContext.ReadAsync((int)id,true,false);
+            var product = await productContext.ReadAsync((int)id,true);
             if (product == null)
             {
                 return NotFound();

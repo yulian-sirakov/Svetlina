@@ -8,10 +8,11 @@ namespace Svetlina.Services
     public class ProjectContext : IDb<Project, int>
     {
         private readonly SvetlinaDbContext dbContext;
-
-        public ProjectContext(SvetlinaDbContext dbContext)
+        private readonly ScheduleContext scheduleContext;
+        public ProjectContext(SvetlinaDbContext dbContext, ScheduleContext scheduleContext)
         {
             this.dbContext = dbContext;
+            this.scheduleContext = scheduleContext;
         }
 
         public async Task CreateAsync(Project item)
@@ -48,17 +49,26 @@ namespace Svetlina.Services
                 }
                 item.Workers = workersFromDb;
 
-                Schedule scheduleFromDb = await dbContext.Schedules.FindAsync(item.ScheduleId);
+
+                Schedule scheduleFromDb = await dbContext.Schedules.FindAsync(item.Schedule.ScheduleId);
                 if (scheduleFromDb != null)
                 {
                     item.Schedule = scheduleFromDb;
                 }
+                else
+                {
+                    Schedule sch = new Schedule(item.Customer.UserName,item.StartDate,item.EndDate);
+                    item.Schedule = sch;
+                }
 
-                Customer customerFromDb = await dbContext.Users.FindAsync(item.CustomerId);
+
+                Customer customerFromDb = await dbContext.Users.FindAsync(item.Customer.Id);
                 if (customerFromDb != null)
                 {
                     item.Customer = customerFromDb;
                 }
+                dbContext.Projects.Add(item);
+                await dbContext.SaveChangesAsync  ();
             }
             catch (Exception)
             {
@@ -85,7 +95,7 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<ICollection<Project>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<ICollection<Project>> ReadAllAsync(bool useNavigationalProperties = false)
         {
             try
             {
@@ -104,7 +114,7 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<Project> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<Project> ReadAsync(int key, bool useNavigationalProperties = false)
         {
             try
             {
@@ -173,7 +183,7 @@ namespace Svetlina.Services
                     }
                     projectFromDb.Workers = workersFromDb;
 
-                    Schedule scheduleFromDb = await dbContext.Schedules.FindAsync(item.ScheduleId);
+                    Schedule scheduleFromDb = await dbContext.Schedules.FindAsync(item.Schedule.ScheduleId);
                     if (scheduleFromDb != null)
                     {
                         projectFromDb.Schedule = scheduleFromDb;
@@ -183,7 +193,7 @@ namespace Svetlina.Services
                         projectFromDb.Schedule = item.Schedule;
                     }
 
-                    Customer customerFromDb = await dbContext.Users.FindAsync(item.CustomerId);
+                    Customer customerFromDb = await dbContext.Users.FindAsync(item.Customer.Id);
                     if (customerFromDb != null)
                     {
                         projectFromDb.Customer = customerFromDb;

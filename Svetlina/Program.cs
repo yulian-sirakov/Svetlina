@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Svetlina.Data.Common;
+using Svetlina.Data.Models;
 using Svetlina.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,14 +12,36 @@ builder.Services.AddDbContext<SvetlinaDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<SvetlinaDbContext>();
+//builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<SvetlinaDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 builder.Services.AddScoped<ProductContext, ProductContext>();
 builder.Services.AddScoped<ProjectContext, ProjectContext>();
 builder.Services.AddScoped<ReportContext, ReportContext>();
 builder.Services.AddScoped<ScheduleContext, ScheduleContext>();
 builder.Services.AddScoped<WorkerContext, WorkerContext>();
+builder.Services.AddScoped<CustomerContext, CustomerContext>();
+builder.Services.AddScoped<IdentityContext, IdentityContext>();
+
+
+builder.Services.AddIdentity<Customer, IdentityRole>(io =>
+{
+    io.Password.RequiredLength = 5;
+    io.Password.RequireNonAlphanumeric = false;
+    io.Password.RequiredUniqueChars = 0;
+    io.Password.RequireUppercase = false;
+    io.Password.RequireDigit = false;
+
+    io.User.RequireUniqueEmail = false;
+
+    io.SignIn.RequireConfirmedEmail = false;
+
+    io.Lockout.MaxFailedAccessAttempts = 3;
+}).AddEntityFrameworkStores<SvetlinaDbContext>()
+                .AddDefaultTokenProviders();
 
 
 var app = builder.Build();
@@ -39,12 +62,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
 
 app.Run();

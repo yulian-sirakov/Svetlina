@@ -20,11 +20,9 @@ namespace Svetlina.Data.Models
         public List<Worker> Workers { get; set; }
 
         public Schedule Schedule { get; set; }
-        public int ScheduleId { get; set; }
         public List<Product> ProjectsProducts { get; set; }
 
         public Customer Customer { get; set; }
-        public string CustomerId { get; set; }
 
 
 
@@ -35,9 +33,8 @@ namespace Svetlina.Data.Models
             Workers = new List<Worker>();
             ProjectsProducts = new List<Product>();
         }
-        public Project(int ProjectId, Schedule schedule, string ProjectName, Customer customer, string Description, DateTime StartDate, DateTime EndDate)
+        public Project( Schedule schedule, string ProjectName, Customer customer, string Description, DateTime StartDate, DateTime EndDate)
         {
-            this.ProjectId = ProjectId;
             this.ProjectName = ProjectName;
             this.Description = Description;
             this.StartDate = StartDate;
@@ -45,7 +42,6 @@ namespace Svetlina.Data.Models
             Workers = new List<Worker>();
             ProjectsProducts = new List<Product>();
             Schedule = schedule;
-            ScheduleId = schedule.ScheduleId;
             Customer = customer;
         }
     }

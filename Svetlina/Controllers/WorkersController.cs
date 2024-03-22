@@ -38,7 +38,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var worker = await workerContext.ReadAsync((int)id, true, true);
+            var worker = await workerContext.ReadAsync((int)id, true);
 
             if (worker == null)
             {
@@ -80,7 +80,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var worker = await workerContext.ReadAsync((int)id, true, false);
+            var worker = await workerContext.ReadAsync((int)id, true);
             if (worker == null)
             {
                 return NotFound();

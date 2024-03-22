@@ -1,21 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Svetlina.Data.Common;
 using Svetlina.Data.Models;
 
 namespace Svetlina.Services
 {
-    public class CustomerContext
+    public class IdentityContext
     {
-        private readonly SvetlinaDbContext context;
-        private readonly UserManager<Customer> userManager;
-        public CustomerContext(SvetlinaDbContext dbContext, UserManager<Customer> userManager)
+        UserManager<Customer> userManager;
+        SvetlinaDbContext context;
+
+        public IdentityContext(SvetlinaDbContext context, UserManager<Customer> userManager)
         {
-
-            context = dbContext;
             this.userManager = userManager;
-
+            this.context = context;
         }
+
         public async Task SeedDataAsync(string adminPass, string adminEmail)
         {
             //await context.Database.MigrateAsync();
@@ -37,14 +38,21 @@ namespace Svetlina.Services
                 await userManager.AddToRoleAsync(adminIdentityUser, Role.Administrator.ToString());
                 await userManager.AddPasswordAsync(adminIdentityUser, password);
                 await userManager.SetEmailAsync(adminIdentityUser, email);
+
             }
         }
 
-        public async Task<Tuple<IdentityResult, Customer>> CreateUserAsync(string username, string password, string email, string Phone, Role role)
+
+
+
+
+        //CRUD
+
+        public async Task<Tuple<IdentityResult, Customer>> CreateUserAsync(string username, string password, string email, string phonenumber, Role role)
         {
             try
             {
-                Customer user = new Customer(username, email, Phone);
+                Customer user = new Customer(username, email, phonenumber);
                 IdentityResult result = await userManager.CreateAsync(user, password);
 
                 if (!result.Succeeded)
@@ -69,11 +77,13 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<Customer> LogInAsync(string username, string password)
+        public async Task<Customer> LogInUserAsync(string username, string password)
         {
             try
             {
                 Customer user = await userManager.FindByNameAsync(username);
+
+                //Customer user = await userManager.FindByEmailAsync(username);
 
                 if (user == null)
                 {
@@ -97,17 +107,16 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<Customer> ReadAsync(string key, bool useNavigationalProperties = false)
+        public async Task<Customer> ReadAsync(string key, bool useNavigationalProperties)
         {
             try
             {
-                if (!useNavigationalProperties)
+                if (useNavigationalProperties)
                 {
-                    // If you want to use the API
-                    return await userManager.FindByIdAsync(key);
+                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).SingleOrDefaultAsync(x => x.Id == key);
                 }
+                return await userManager.FindByIdAsync(key);
 
-                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).SingleOrDefaultAsync(u => u.Id == key);
             }
             catch (Exception)
             {
@@ -115,18 +124,15 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<IEnumerable<Customer>> ReadAllAsync(bool useNavigationalProperties = false)
+        public async Task<IEnumerable<Customer>> ReadAllUsersAsync(bool useNavigationalProperties)
         {
             try
             {
-
-                if (!useNavigationalProperties)
+                if (useNavigationalProperties)
                 {
-                    // If you want to use the API
-                    return await context.Users.ToListAsync();
+                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).ToListAsync();
                 }
-
-                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).ToListAsync();
+                return await context.Users.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -134,7 +140,7 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task UpdateAsync(string id, string username, string phone)
+        public async Task UpdateUserAsync(string id, string username)
         {
             try
             {
@@ -142,7 +148,6 @@ namespace Svetlina.Services
                 {
                     Customer user = await context.Users.FindAsync(id);
                     user.UserName = username;
-                    user.PhoneNumber = phone;
                     await userManager.UpdateAsync(user);
                 }
             }
@@ -152,11 +157,11 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task DeleteAsync(string username)
+        public async Task DeleteUserByNameAsync(string name)
         {
             try
             {
-                Customer user = await FindAsync(username);
+                Customer user = await FindUserByNameAsync(name);
 
                 if (user == null)
                 {
@@ -171,21 +176,17 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<Customer> FindAsync(string username)
+        public async Task<Customer> FindUserByNameAsync(string name)
         {
             try
             {
                 // Identity return Null if there is no user!
-                return await userManager.FindByNameAsync(username);
+                return await userManager.FindByNameAsync(name);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
-
-
     }
 }
-

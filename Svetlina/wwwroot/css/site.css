@@ -20,3 +20,25 @@ html {
 body {
   margin-bottom: 60px;
 }
+.services{
+    width:250px;
+    height:150px;
+}
+
+#uslugi-container{
+    display:flex;
+}
+@media(max-width:1030px) {
+    #uslugi-container {
+        display:flex;
+        flex-direction:column;
+    }
+}
+.img-align {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.txt-align{
+    text-align:center;
+}

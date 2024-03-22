@@ -1,23 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Humanizer.Localisation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Svetlina.Data.Common;
 using Svetlina.Data.Models;
 using Svetlina.Services;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Svetlina.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly ProjectContext projectContext;
+        private readonly CustomerContext customerContext;
+        private readonly ScheduleContext scheduleContext;
+        private readonly IdentityContext identityContext;
 
-        public ProjectsController(ProjectContext projectContext)
+        public ProjectsController(ProjectContext projectContext,CustomerContext customerContext, ScheduleContext scheduleContext,IdentityContext identityContext)
         {
             this.projectContext = projectContext;
+            this.customerContext = customerContext;
+            this.scheduleContext = scheduleContext;
+            this.identityContext = identityContext;
         }
 
         // GET: Projects
@@ -35,7 +47,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var project = await projectContext.ReadAsync((int)id, true, false);
+            var project = await projectContext.ReadAsync((int)id, true);
             if (project == null)
             {
                 return NotFound();
@@ -45,8 +57,9 @@ namespace Svetlina.Controllers
         }
 
         // GET: Projects/Create
-        public IActionResult Create()
+        public async Task< IActionResult> Create()
         {
+            await LoadNavigationalEntities();
             return View();
         }
 
@@ -55,16 +68,27 @@ namespace Svetlina.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,Description,StartDate,EndDate,ScheduleId,CustomerId")] Project project)
+        public async Task<IActionResult> Create(IFormCollection formCollection)
         {
+            await LoadNavigationalEntities();
+
+            Customer user = await identityContext.ReadAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), true);
+            
+
+
+                Project project = new Project(new Schedule(), formCollection["ProjectName"], user, formCollection["Description"], DateTime.Parse(formCollection["StartDate"]), DateTime.Parse(formCollection["EndDate"]));
+
+           
+
             if (ModelState.IsValid)
             {
-                
                 await projectContext.CreateAsync(project);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(project);
         }
+        
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -74,7 +98,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var project = await projectContext.ReadAsync((int)id, true, true);
+            var project = await projectContext.ReadAsync((int)id, true);
             if (project == null)
             {
                 return NotFound();
@@ -87,34 +111,27 @@ namespace Svetlina.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,Description,StartDate,EndDate,ScheduleId,CustomerId")] Project project)
+        public async Task<IActionResult> Edit(int id, IFormCollection formCollection)
         {
-            if (id != project.ProjectId)
-            {
-                return NotFound();
-            }
+            await LoadNavigationalEntities();
+
+            Customer user = await identityContext.ReadAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), true);
+
+
+
+            Project project = new Project(new Schedule(), formCollection["ProjectName"], user, formCollection["Description"], DateTime.Parse(formCollection["StartDate"]), DateTime.Parse(formCollection["EndDate"]));
+
+            project.ProjectId = id;
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                   await projectContext.UpdateAsync(project);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await ProjectExists(project.ProjectId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await projectContext.CreateAsync(project);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(project);
         }
+
 
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -148,5 +165,11 @@ namespace Svetlina.Controllers
         {
             return await projectContext.ReadAsync(id)!=null;
         }
+        private async Task LoadNavigationalEntities()
+        {
+            ViewData["Customers"] = new SelectList(await customerContext.ReadAllAsync(), "CustomerId", "CustomerName");
+            ViewData["Schedules"] = new SelectList(await scheduleContext.ReadAllAsync(), "ScheduleId", "ScheduleName");
+        }
+
     }
 }

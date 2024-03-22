@@ -61,7 +61,7 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<ICollection<Schedule>> ReadAllAsync(bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<ICollection<Schedule>> ReadAllAsync(bool useNavigationalProperties = false)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task<Schedule> ReadAsync(int key, bool useNavigationalProperties = false, bool isReadOnly = true)
+        public async Task<Schedule> ReadAsync(int key, bool useNavigationalProperties = false)
         {
             try
             {

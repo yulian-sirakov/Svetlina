@@ -34,7 +34,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var schedule = await scheduleContext.ReadAsync((int)id, true, true);
+            var schedule = await scheduleContext.ReadAsync((int)id, true);
             if (schedule == null)
             {
                 return NotFound();
@@ -73,7 +73,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var schedule = await scheduleContext.ReadAsync((int)id, false, true);
+            var schedule = await scheduleContext.ReadAsync((int)id, false);
             if (schedule == null)
             {
                 return NotFound();

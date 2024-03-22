@@ -22,11 +22,12 @@ namespace Svetlina.Data.Common
             //modelBuilder.Entity<IdentityUser>(x=>x.HasKey(p=>p.Id));
             //modelBuilder.Entity<ProjectProduct>(entity
             //=> entity.HasKey(pp => new{pp.ProjectId, pp.ProductId}));
-            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(t => new { t.LoginProvider, t.ProviderKey });
-            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(t => new { t.RoleId });
-            modelBuilder.Entity<IdentityUserToken<string>>().HasKey(t => new { t.UserId });
 
+            //modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(t => new { t.LoginProvider, t.ProviderKey });
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasKey(t => new { t.UserId, t.RoleId });
+            //modelBuilder.Entity<IdentityUserToken<string>>().HasKey(t => new { t.UserId });
 
+            base.OnModelCreating(modelBuilder);
         }
 
         public new DbSet<Customer> Users { get; set; }

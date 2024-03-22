@@ -34,7 +34,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var report = await reportContext.ReadAsync((int)id, true, false);
+            var report = await reportContext.ReadAsync((int)id, true);
             if (report == null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace Svetlina.Controllers
                 return NotFound();
             }
 
-            var report = await reportContext.ReadAsync((int)id,true,false);
+            var report = await reportContext.ReadAsync((int)id,true);
             if (report == null)
             {
                 return NotFound();

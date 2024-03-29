@@ -4,6 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center container-lg">
+     @if (User.IsInRole("Administrator"))
+        {
 <h1>Index</h1>
 
 <p>
@@ -18,16 +21,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Project)
+            <th>
+                @Html.DisplayNameFor(model => model.WorkerImage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SpecialisationType)
-            </th> *@
-            <th></th>
+                @Html.DisplayNameFor(model=>model.SpecialisationType)
+            </th>
+           
+           
         </tr>
     </thead>
     <tbody>
+        
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -35,6 +40,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem=>item.WorkerInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem=>item.SpecialisationType)
             </td>
           @*   <td>
                 @Html.DisplayFor(modelItem => item.Project.Description)
@@ -51,3 +63,31 @@
 }
     </tbody>
 </table>
+}
+@foreach (var i in Model)
+{
+
+    <div class="col mb-5">
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="@i.WorkerImage" alt="...">
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">@i.WorkerName</h5>
+                    <!-- Product price-->
+                    <p> @i.PhoneNumber</p>
+
+                   <p> @i.SpecialisationType</p>
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-action="Details" asp-route-id="@i.WorkerId">Детайли</a></div
+
+            </div>
+        </div>
+    </div>
+}
+</div>

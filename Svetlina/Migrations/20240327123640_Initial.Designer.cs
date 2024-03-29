@@ -12,8 +12,8 @@ using Svetlina.Data.Common;
 namespace Svetlina.Migrations
 {
     [DbContext(typeof(SvetlinaDbContext))]
-    [Migration("20240320122741_initial")]
-    partial class initial
+    [Migration("20240327123640_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -404,6 +404,12 @@ namespace Svetlina.Migrations
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
+
+                    b.Property<string>("WorkerImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkerInfo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkerName")
                         .IsRequired()

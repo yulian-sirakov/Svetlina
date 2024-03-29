@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Svetlina.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -293,6 +293,8 @@ namespace Svetlina.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WorkerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WorkerImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkerInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

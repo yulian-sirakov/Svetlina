@@ -61,7 +61,7 @@ namespace Svetlina.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WorkerId,WorkerName,PhoneNumber,ProjectId,SpecialisationType")] Worker worker)
+        public async Task<IActionResult> Create([Bind("WorkerId,WorkerName,PhoneNumber,WorkerImage,WorkerInfo,ProjectId,SpecialisationType")] Worker worker)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace Svetlina.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WorkerId,WorkerName,PhoneNumber,ProjectId,SpecialisationType")] Worker worker)
+        public async Task<IActionResult> Edit(int id, [Bind("WorkerId,WorkerName,PhoneNumber,WorkerImage,WorkerInfo,ProjectId,SpecialisationType")] Worker worker)
         {
             if (id != worker.WorkerId)
             {

@@ -18,11 +18,7 @@ namespace Svetlina.Services
         {
             try
             {
-                //Project projectFromDb = await dbContext.Projects.FindAsync(item.ProjectId);
-                //if (projectFromDb != null)
-                //{
-                //    item.Project = projectFromDb;
-                //}
+            
 
                 dbContext.Workers.Add(item);
                 await dbContext.SaveChangesAsync();
@@ -73,12 +69,7 @@ namespace Svetlina.Services
         {
             try
             {
-                //if (useNavigationalProperties)
-                //{
-                //    return dbContext.Workers.Include(b => b.Project).FirstOrDefault(b => b.ProjectId == key);
-                //}
-                //else
-                //{
+                
                 return await dbContext.Workers.FindAsync(key);
 
             }
@@ -96,24 +87,10 @@ namespace Svetlina.Services
                 Worker workerFromDb = await ReadAsync(item.WorkerId, useNavigationalProperties);
                 workerFromDb.WorkerName = item.WorkerName;
                 workerFromDb.PhoneNumber = item.PhoneNumber;
-                //workerFromDb.SpecialisationType = item.SpecialisationType;
-
-
-                //if (useNavigationalProperties)
-                //{
-                //    if (item.Project != null)
-                //    {
-                //        var projectFromDb = await dbContext.Projects.FindAsync(item.ProjectId);
-                //        if (projectFromDb != null)
-                //        {
-                //            item.Project = projectFromDb;
-                //        }
-
-                //    }
-                //    workerFromDb.Project = item.Project;
-
-
-                //}
+                workerFromDb.WorkerImage = item.WorkerImage;
+                workerFromDb.WorkerInfo= item.WorkerInfo;
+                workerFromDb.SpecialisationType=item.SpecialisationType;
+              
                 await dbContext.SaveChangesAsync();
 
             }

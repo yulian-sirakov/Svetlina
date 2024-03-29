@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Svetlina.Data.Common;
 
@@ -11,9 +12,11 @@ using Svetlina.Data.Common;
 namespace Svetlina.Migrations
 {
     [DbContext(typeof(SvetlinaDbContext))]
-    partial class SvetlinaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240329113913_Final")]
+    partial class Final
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,9 +403,6 @@ namespace Svetlina.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialisationType")
                         .HasColumnType("int");
 
                     b.Property<string>("WorkerImage")

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Svetlina.Data.Common;
 using Svetlina.Data.Models;
 using Svetlina.Services;
@@ -21,8 +23,11 @@ namespace Svetlina.Controllers
         }
 
         // GET: Schedules
+
+
         public async Task<IActionResult> Index()
         {
+            
             return View(await scheduleContext.ReadAllAsync());
         }
 
@@ -147,6 +152,13 @@ namespace Svetlina.Controllers
         private async Task<bool> ScheduleExists(int id)
         {
             return await scheduleContext.ReadAsync(id)!=null;
+        }
+
+
+
+        public class Input()
+        {
+            public string ScheduleName { get; set; }
         }
     }
 }

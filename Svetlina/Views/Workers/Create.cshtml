@@ -22,6 +22,21 @@
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="WorkerImage" class="control-label"></label>
+                <input asp-for="WorkerImage" class="form-control" />
+                <span asp-validation-for="WorkerImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkerInfo" class="control-label"></label>
+                <input asp-for="WorkerInfo" class="form-control" />
+                <span asp-validation-for="WorkerInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="SpecialisationType" class="control-label"></label>
+            <input asp-for="SpecialisationType" class="form-control" />
+            <span asp-validation-for="SpecialisationType" class="text-danger"></span>
+             </div>
             @* <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
                 <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>

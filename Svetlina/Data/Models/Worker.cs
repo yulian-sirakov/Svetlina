@@ -16,26 +16,24 @@ namespace Svetlina.Data.Models
         [Required(ErrorMessage = "Телефонният номер на работника е задължителен.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Невалиден телефонен номер.")]
         public string PhoneNumber { get; set; }
+        public string WorkerImage { get; set; }
+        public string WorkerInfo { get; set; }
+        public SpecialisationType SpecialisationType { get; set; }
 
-        //[ForeignKey("ProjectId")]
-        //public Project Project { get; set; }
 
-        //public int ProjectId { get; set; }
 
-        //public SpecialisationType SpecialisationType { get; set; }
         public Worker()
         {
 
         }
-        public Worker(int WorkerId, string WorkerName, string PhoneNumber)
+        public Worker(int WorkerId, string WorkerName, string PhoneNumber, string workerImage, string workerInfo, SpecialisationType specialisationType)
         {
             this.WorkerId = WorkerId;
             this.WorkerName = WorkerName;
             this.PhoneNumber = PhoneNumber;
-            //SpecialisationType = SpecialisationType;
-            //this.Project = Project;
-            //ProjectId = Project.ProjectId;
-
+            this.WorkerImage = workerImage;
+            this.WorkerInfo = workerInfo;
+            SpecialisationType = specialisationType;
         }
     }
 }

@@ -12,7 +12,6 @@ using Microsoft.Identity.Client;
 using Svetlina.Data.Common;
 using Svetlina.Data.Models;
 using Svetlina.Services;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace Svetlina.Controllers

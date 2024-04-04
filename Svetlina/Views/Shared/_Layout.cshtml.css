@@ -46,5 +46,8 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
-
+.nav-logo {
+    height: 50px; /* Примерна височина; адаптирайте според вашите нужди */
+    width: 50px; /* Запазва съотношението на изображението */
+}
 

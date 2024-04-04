@@ -78,47 +78,48 @@
 
 			</div>
 
-			<div class="g-3 align-items-center contacts-header">
-			<h2>
-				Искаш да се свържем с теб?
-			
-			</h2>
-			<p>
-				Оставете ни вашите контакти и наш служител ще се свърже с вас
 
+			<div class="info-form">
 
-			</p>
-			</div>
-			<form class="row row-cols-lg-auto g-3 align-items-center contacts-form">
-				<div class="col-12">
-					<label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
-					<div class="input-group">
-						<input required type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Име">
-					</div>
-				</div>
-				<div class="col-12">
-					<label class="visually-hidden" for="inlineFormInputGroupSurname">Surname</label>
-					<div class="input-group">
-						<input required type="text" class="form-control" id="inlineFormInputGroupSurname" placeholder="Фамилия">
-					</div>
-				</div>
+		
+			<h1 style="text-align:center">Искаш да се свържем с теб?</h1>
+			<h2 style="text-align:center">Попълни и човек от екипа ни ще се свърже с вас.</h2>
 
-				<div class="col-12">
-					<label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-					<select required class="form-select" id="inlineFormSelectPref">
-						<option selected value="1">Електроизграждане</option>
-						<option value="2">Видеонаблюдение</option>
-						<option value="3">Пожароизвестяване</option>
-					</select>
-				</div>
+	<form class="row gx-3 gy-2 align-items-center">
+  <div class="col-sm-3">
+    <label class="visually-hidden" for="specificSizeInputName">Име</label>
+    <input type="text" class="form-control" id="specificSizeInputName" placeholder="Име">
+  </div>
+  <div class="col-sm-3">
+    <label class="visually-hidden" for="specificSizeInputGroupUsername">Потребителско име</label>
+    <div class="input-group">
+      
+      <input type="text" class="form-control" id="specificSizeInputGroupUsername" placeholder="Потребителско име">
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+    <select class="form-select" id="specificSizeSelect">
+      <option selected>Избери...</option>
+      <option value="1">Електроизграждане</option>
+      <option value="2">Видеонаблюдение</option>
+      <option value="3">Пожароизвестяване</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="autoSizingCheck2">
+      <label class="form-check-label" for="autoSizingCheck2">
+        Запомни ме
+      </label>
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">Изпрати</button>
+  </div>
+</form>
+</div>
 
-
-
-				<div class="col-12">
-					<button type="submit" class="btn btn-primary">Изпрати</button>
-				</div>
-			</form>
-		</div>
 
 	</body>
 

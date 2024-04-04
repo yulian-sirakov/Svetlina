@@ -461,3 +461,15 @@ footer > div.container {
     .info p strong {
         color: #333;
     }
+
+
+.footer{
+    background-color:#EEEEEE;
+}
+.info-form {
+    margin-bottom: 10%;
+    margin-top: 3%;
+}
+.container{
+    padding-bottom:7%;
+}

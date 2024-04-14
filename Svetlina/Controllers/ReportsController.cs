@@ -11,11 +11,11 @@ using Svetlina.Services;
 
 namespace Svetlina.Controllers
 {
-    public class ReportController : Controller
+    public class ReportsController : Controller
     {
         private readonly ReportContext reportContext;
 
-        public ReportController(ReportContext reportContext)
+        public ReportsController(ReportContext reportContext)
         {
             this.reportContext = reportContext;
         }

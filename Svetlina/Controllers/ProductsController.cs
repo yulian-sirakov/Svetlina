@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +18,18 @@ namespace Svetlina.Controllers
     public class ProductsController : Controller
     {
         private readonly ProductContext productContext;
+        private readonly CustomerContext CustomerContext;
 
-        public ProductsController(ProductContext productContext)
+        public ProductsController(ProductContext productContext, CustomerContext customerContext)
         {
             this.productContext = productContext;
+            this.CustomerContext = customerContext;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await productContext.ReadAllAsync());
+            return View(await productContext.ReadAllAsync(true));
         }
 
         // GET: Products/Details/5
@@ -156,6 +160,17 @@ namespace Svetlina.Controllers
 
             await productContext.DeleteAsync((int)id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Addtocart(int id)
+        {
+            Customer user = await CustomerContext.ReadAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), true);
+            var product = await productContext.ReadAsync(id,true);
+            user.cart.Products.Add(product);
+            await CustomerContext.UpdateAsync(user,true);
+            return RedirectToAction(nameof(Index));
+            
+
         }
 
         private async Task<bool> ProductExists(int id)

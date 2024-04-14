@@ -1,7 +1,4 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿
 var calendar = document.getElementById("calendar-table");
 var gridTable = document.getElementById("table-body");
 var currentDate = new Date();
@@ -16,10 +13,10 @@ function createCalendar(date, side) {
     var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
     var monthTitle = document.getElementById("month-name");
-    var monthName = currentDate.toLocaleString("en-US", {
+    var monthName = currentDate.toLocaleString("bg-BG", {
         month: "long"
     });
-    var yearNum = currentDate.toLocaleString("en-US", {
+    var yearNum = currentDate.toLocaleString("bg-BG", {
         year: "numeric"
     });
     monthTitle.innerHTML = `${monthName} ${yearNum}`;
@@ -55,7 +52,7 @@ function createCalendar(date, side) {
             if (selectedDayBlock == null && i == currentDate.getDate() || selectedDate.toDateString() == new Date(currentDate.getFullYear(), currentDate.getMonth(), i).toDateString()) {
                 selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
 
-                document.getElementById("eventDayName").innerHTML = selectedDate.toLocaleString("en-US", {
+                document.getElementById("eventDayName").innerHTML = selectedDate.toLocaleString("bg-BG", {
                     month: "long",
                     day: "numeric",
                     year: "numeric"
@@ -103,7 +100,7 @@ function createCalendar(date, side) {
 createCalendar(currentDate);
 
 var todayDayName = document.getElementById("todayDayName");
-todayDayName.innerHTML = "Today is " + currentDate.toLocaleString("en-US", {
+todayDayName.innerHTML = "Днес е " + currentDate.toLocaleString("bg-BG", {
     weekday: "long",
     day: "numeric",
     month: "short"
@@ -168,10 +165,10 @@ function showEvents() {
     } else {
         let emptyMessage = document.createElement("div");
         emptyMessage.className = "empty-message";
-        emptyMessage.innerHTML = "Sorry, no events to selected date";
+        emptyMessage.innerHTML = "Няма проекти за избраната дата";
         sidebarEvents.appendChild(emptyMessage);
         let emptyFormMessage = document.getElementById("emptyFormTitle");
-        emptyFormMessage.innerHTML = "No events now";
+        emptyFormMessage.innerHTML = "Няма проекти сега";
     }
 }
 

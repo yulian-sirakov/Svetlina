@@ -11,7 +11,7 @@
 <body>
     <header>
         <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">-->
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" >
             <div class="container-fluid nav-bar">
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,15 +30,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Магазин</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Проекти</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Workers" asp-action="Index">Работници</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Schedules" asp-action="Index">Календар</a>
                         </li>
-                       
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="Index">Отзиви</a>
+                        </li>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Проекти</a>
+                        </li>
+                        }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -51,9 +57,51 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*< footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Svetlina - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
+    <footer class="site-footer "style="padding:0px">
+        <div class="footer-top"style="padding:0px">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h5>Контакти</h5>
+                        <ul>
+                            <li><a href="tel:+359123456789">+359 123 456 789</a></li>
+                            <li><a href="mailto:info@example.com">info@example.com</a></li>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h5>Услуги</h5>
+                        <ul>
+                            <li><a href="#">Уеб Дизайн</a></li>
+                            <li><a href="#">SEO Оптимизация</a></li>
+                            <li><a href="#">Дигитален Маркетинг</a></li>
+                            <li><a href="#">Съдържание</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h5>Компания</h5>
+                        <ul>
+                            <li><a href="#">За нас</a></li>
+                            <li><a href="#">Нашите проекти</a></li>
+                            <li><a href="#">Сертификати</a></li>
+                            <li><a href="#">Кариери</a></li>
+                            <li><a href="#">Политика за поверителност</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-text m-0 text-center">&copy; 2024 Всички права запазени | Разработено от <a href="https://yourwebsite.com">YourWebsite</a></p>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

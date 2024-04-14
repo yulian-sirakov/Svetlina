@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
+<html style="height:100%">
+    <body>
 
+    </body>
 @if (User.IsInRole("Administrator"))
 {
 <h1>Details</h1>
@@ -51,13 +54,18 @@
 </div>
 
 }
+<div style="padding:5%">
+
+
 <link href="~/css/site.css" rel="stylesheet" />
-<div class="worker-info">
+<div class="worker-info" >
     <img src="@Model.WorkerImage" alt="Worker Photo" class="worker-photo">
     <div class="info">
         <h1>@Model.WorkerName</h1>
         @* <p><strong>Професия:</strong>@Model.SpecialisationType</p> *@
-        <p><strong>Телефон:</strong>@Model.PhoneNumber</p>
-        <p><strong>Описание</strong>@Model.WorkerInfo</p>
+        <p><strong>Телефон: </strong>@Model.PhoneNumber</p>
+        <p><strong>Описание: </strong>@Model.WorkerInfo</p>
     </div>
 </div>
+</div>
+</html>

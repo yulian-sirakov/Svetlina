@@ -36,5 +36,6 @@ namespace Svetlina.Data.Common
         public DbSet<Report> Reports { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Worker> Workers { get; set; }
+        public DbSet<Svetlina.Data.Models.Cart> Carts { get; set; }
     }
 }

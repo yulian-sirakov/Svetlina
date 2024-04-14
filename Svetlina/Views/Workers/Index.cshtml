@@ -3,8 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
+<html style="height:100%">
+    <body>
 
-<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center container-lg">
+    </body>
+
+<div style="height:100%; padding-top:2%" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center container-lg">
      @if (User.IsInRole("Administrator"))
         {
 <h1>Index</h1>
@@ -91,3 +95,4 @@
     </div>
 }
 </div>
+</html>

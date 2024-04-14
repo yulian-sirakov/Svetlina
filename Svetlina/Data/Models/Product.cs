@@ -14,7 +14,7 @@ namespace Svetlina.Data.Models
 
         [Required(ErrorMessage = "Цената на продукта е задължителна.")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Цената на продукта трябва да бъде положително число.")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public string ProductImage {  get; set; }
         public List<Project> ProjectsProducts { get; set; }
         public Product()
@@ -22,7 +22,7 @@ namespace Svetlina.Data.Models
             ProjectsProducts = new List<Project>();
         }
 
-        public Product(int ProductId, string productName, double price)
+        public Product(int ProductId, string productName, decimal price)
         {
             this.ProductId = ProductId;
             this.ProductName = productName;

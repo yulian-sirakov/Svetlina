@@ -5,8 +5,11 @@
 @{
     ViewData["Title"] = "Index";
 }
+<html style="height:100%">
+    <body>
 
-<div style="margin-top:2%" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center container-lg">
+    </body>
+<div style="margin-top:2%;" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center container-lg">
         @if (User.IsInRole("Administrator"))
         {
 <h1>Index</h1>
@@ -60,15 +63,19 @@
                         <!-- Product name-->
                         <h5 class="fw-bolder">@i.ProductName</h5>
                         <!-- Product price-->
-                        @i.Price
+                        @i.Price лв.
                     </div>
                 </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                    <form asp-action="Addtocart" asp-route-id="@i.ProductId">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" onclick="this.closest('form').submit();" href="#">Добави в количката</a></div>
+
+                    </form>
                 </div>
             </div>
         </div>
     }
     
 </div>
+</html>

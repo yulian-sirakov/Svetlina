@@ -107,7 +107,7 @@ namespace Svetlina.Services
                     return await userManager.FindByIdAsync(key);
                 }
 
-                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).SingleOrDefaultAsync(u => u.Id == key);
+                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).Include(x => x.cart).SingleOrDefaultAsync(u => u.Id == key);
             }
             catch (Exception)
             {
@@ -126,7 +126,7 @@ namespace Svetlina.Services
                     return await context.Users.ToListAsync();
                 }
 
-                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).ToListAsync();
+                return await context.Users.Include(u => u.Projects).Include(u => u.Reports).Include(x => x.cart).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -134,17 +134,26 @@ namespace Svetlina.Services
             }
         }
 
-        public async Task UpdateAsync(string id, string username, string phone)
+        public async Task UpdateAsync(Customer item,bool useNavigationalProperties=false)
         {
             try
             {
-                if (!string.IsNullOrEmpty(username))
+                
+                    Customer user = await context.Users.FindAsync(item.Id);
+                    user.UserName = item.UserName;
+                    user.PhoneNumber = item.PhoneNumber;
+                    user.Email = item.Email;
+                    
+                if(useNavigationalProperties)
                 {
-                    Customer user = await context.Users.FindAsync(id);
-                    user.UserName = username;
-                    user.PhoneNumber = phone;
-                    await userManager.UpdateAsync(user);
+                    user.cart=item.cart;
+                    user.Projects=item.Projects;
+                    user.Reports=item.Reports;
                 }
+
+                context.SaveChanges();
+                    
+                
             }
             catch (Exception ex)
             {

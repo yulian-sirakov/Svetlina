@@ -25,6 +25,8 @@ builder.Services.AddScoped<ScheduleContext, ScheduleContext>();
 builder.Services.AddScoped<WorkerContext, WorkerContext>();
 builder.Services.AddScoped<CustomerContext, CustomerContext>();
 builder.Services.AddScoped<IdentityContext, IdentityContext>();
+builder.Services.AddScoped<CartContext, CartContext>();
+
 
 
 builder.Services.AddIdentity<Customer, IdentityRole>(io =>

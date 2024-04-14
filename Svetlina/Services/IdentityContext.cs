@@ -113,7 +113,7 @@ namespace Svetlina.Services
             {
                 if (useNavigationalProperties)
                 {
-                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).SingleOrDefaultAsync(x => x.Id == key);
+                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).Include(x=>x.cart).SingleOrDefaultAsync(x => x.Id == key);
                 }
                 return await userManager.FindByIdAsync(key);
 
@@ -130,7 +130,7 @@ namespace Svetlina.Services
             {
                 if (useNavigationalProperties)
                 {
-                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).ToListAsync();
+                    return await context.Users.Include(x => x.Reports).Include(x => x.Projects).Include(x => x.cart).ToListAsync();
                 }
                 return await context.Users.ToListAsync();
             }
